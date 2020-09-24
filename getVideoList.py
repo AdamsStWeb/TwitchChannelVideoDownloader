@@ -14,7 +14,7 @@ def writeFile(fileName, line):
     fileObj.close()
 
 ## Its the name you see when you browse to the twitch url of the streamer
-USER_ID = "ProfessorSexton"
+USER_ID = "<USER_ID>"
 
 ## First setup your application on your dashboard.
 ## here: https://dev.twitch.tv/console
@@ -23,8 +23,8 @@ USER_ID = "ProfessorSexton"
 ## Make note of 8your Client ID
 ## Finvzvxcbv><}rst get a local access token. 
 ## Make note of your Client Secret 
-CLIENT_ID = "bnma30adlewbo9q7fb7msokcgidxlz" 
-SECRET = "bbf0qk25vnss8fm67xzith63e51slr"
+CLIENT_ID = "<CLIENT_ID>" 
+SECRET = "<SECRET>"
 
 ## First get a local access token. 
 secretKeyURL = "https://id.twitch.tv/oauth2/token?client_id={}&client_secret={}&grant_type=client_credentials".format(CLIENT_ID, SECRET)
