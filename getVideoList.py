@@ -14,7 +14,7 @@ def writeFile(fileName, line):
     fileObj.close()
 
 ## Its the name you see when you browse to the twitch url of the streamer
-USER_ID = "<USER_ID>"
+USER_ID = "ProfessorSexton"
 
 ## First setup your application on your dashboard.
 ## here: https://dev.twitch.tv/console
@@ -23,8 +23,8 @@ USER_ID = "<USER_ID>"
 ## Make note of 8your Client ID
 ## Finvzvxcbv><}rst get a local access token. 
 ## Make note of your Client Secret 
-CLIENT_ID = "<CLIENT_ID>" 
-SECRET = "<SECRET>"
+CLIENT_ID = "bnma30adlewbo9q7fb7msokcgidxlz" 
+SECRET = "bbf0qk25vnss8fm67xzith63e51slr"
 
 ## First get a local access token. 
 secretKeyURL = "https://id.twitch.tv/oauth2/token?client_id={}&client_secret={}&grant_type=client_credentials".format(CLIENT_ID, SECRET)
@@ -36,7 +36,6 @@ userIDURL = "https://api.twitch.tv/helix/users?login=%s"%USER_ID
 responseB = requests.get(userIDURL, headers={"Client-ID":CLIENT_ID,
                                                 'Authorization': "Bearer "+accessTokenData["access_token"]})
 userID = responseB.json()["data"][0]["id"]
-
 
 ## Now you can request the video clip data.
 findVideoURL = "https://api.twitch.tv/helix/videos?user_id=%s"%userID
@@ -50,21 +49,20 @@ videoUrls = []
 
 for entry in data: videoUrls.append(entry.get("url"))
 
-## Read a text document that saves the urls of the videos you've already downloaded
-
-downloaded = readFile('downloadedvideos.txt')
+## Reads a text document that saves the urls of the videos you've already downloaded
+downloadedVideos = readFile('downloadedvideos.txt')
 
 ## Finds the difference between what's on the channel and what you've downloaded 
-#  Then downloads the difference if there is one. 
+#  Then downloads the videos that are on the channel but not in the downloaded array
+notDownloaded = list(set(videoUrls)-set(downloadedVideos))
 
-difference = list(set(videoUrls)-set(downloaded))
-
-if len(difference) == 0: print("You have all of the videos downloaded")
+if len(notDownloaded) == 0: 
+    print("You have all of the videos downloaded")
 
 else:
-    print('Downloading: ' + len(difference) + ' videos')
+    print('Downloading: ', len(notDownloaded) , ' videos')
     
-    for video in difference:
+    for video in notDownloaded:
         cmd  = 'youtube-dl '+ video
         os.system(cmd)
         writeFile('downloadedvideos.txt', video)
